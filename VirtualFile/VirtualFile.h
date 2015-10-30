@@ -22,11 +22,13 @@ public:
 	void* GetBuffer();
 private:
 	float GrowFactor; // это что?
-	size_t usedSize; //объём памяти, уже занятый данными
-	size_t currentSize; //объём commited памяти
+	size_t fileSize; //объём памяти, уже занятый данными
+	size_t commitedSize; //объём commited памяти
 	size_t reservedSize; //объём зарезервированной памяти
 	void* buffer; //начало файла
 	size_t offset; //текущее положение курсора
+	size_t commitMinimum;
+	size_t reserveMinimum;
 };
 
 /*
