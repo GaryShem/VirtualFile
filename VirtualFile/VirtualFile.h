@@ -17,15 +17,16 @@ public:
 	void Write(void *pSrc, size_t nSize);
 	size_t Seek(SeekPosition pos, int offset);
 	size_t GetSize();
+	void* SetSize(size_t nSize);
 
 	void* GetBuffer();
 private:
-	float GrowFactor;
-	size_t usedSize;
-	size_t currentSize;
-	size_t reservedSize;
-	void* buffer;
-	size_t offset;
+	float GrowFactor; // это что?
+	size_t usedSize; //объём памяти, уже занятый данными
+	size_t currentSize; //объём commited памяти
+	size_t reservedSize; //объём зарезервированной памяти
+	void* buffer; //начало файла
+	size_t offset; //текущее положение курсора
 };
 
 /*
