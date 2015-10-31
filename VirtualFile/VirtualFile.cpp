@@ -105,8 +105,6 @@ void* VirtualFile::SetSize(size_t nSize)
 		if (newBuffer == NULL)
 			throw EXCEPTION_ACCESS_VIOLATION;
 		void* errorCheck = VirtualAlloc(newBuffer, commitedSize, MEM_COMMIT, PAGE_READWRITE);
-		if (newBuffer == NULL)
-			throw EXCEPTION_ACCESS_VIOLATION;
 		if (buffer != NULL)
 		{
 			CopyMemory(newBuffer, buffer, fileSize);
@@ -137,6 +135,7 @@ void* VirtualFile::SetSize(size_t nSize)
 		{
 			VirtualFree((void*)((size_t)buffer + decommitBegin + 1), commitedSize - decommitBegin - 1, MEM_DECOMMIT);
 			fileSize = min(fileSize, nSize);
+			offset = min(offset, nSize);
 		}
 	}
 
