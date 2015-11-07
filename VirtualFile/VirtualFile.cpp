@@ -39,6 +39,7 @@ size_t VirtualFile::Read(void* pDest, size_t nSize)
 	{
 		size_t length = fileSize - offset;
 		CopyMemory(pDest, (void*)((size_t)buffer + offset), length);
+		offset = fileSize;
 		return length;
 	}
 }
@@ -51,6 +52,7 @@ void VirtualFile::Write(void* pSrc, size_t nSize)
 		throw EXCEPTION_ACCESS_VIOLATION;
 	fileSize = newFileSize;
 	CopyMemory((void*)((size_t)buffer+offset), pSrc, nSize);
+	offset += nSize;
 }
 
 size_t VirtualFile::Seek(SeekPosition pos, int shift)
@@ -63,7 +65,7 @@ size_t VirtualFile::Seek(SeekPosition pos, int shift)
 	else //if (pos == SeekPosition::end)
 		startingPosition = fileSize;
 
-	if (shift > 0)
+	if (shift >= 0)
 	{
 		offset = startingPosition + shift;
 		if (offset > fileSize)
